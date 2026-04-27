@@ -1,0 +1,92 @@
+services:
+  api:
+    build:
+      context: ./apps/api
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      DATABASE_PATH: /data/brimble-mini.db
+      WORK_DIR: /work
+      DEPLOY_NETWORK: brimble_deploynet
+      CADDY_ADMIN_URL: http://caddy:2019
+      CADDY_SERVER_NAME: brimble
+      PUBLIC_BASE_DOMAIN: localhost
+      PUBLIC_PORT: "8080"
+      APP_PORT: "3000"
+      BUILDKIT_HOST: tcp://buildkit:1234
+      DOCKER_HOST: unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - app-db:/data
+      - build-work:/work
+    networks:
+      - control
+      - deploynet
+    depends_on:
+      - buildkit
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://localhost:3000/api/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  web:
+    build:
+      context: ./apps/web
+    networks:
+      - control
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://localhost:4173').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  caddy:
+    image: caddy:2
+    command: ["caddy", "run", "--config", "/etc/caddy/caddy.json"]
+    ports:
+      - "8080:80"
+    volumes:
+      - ./infra/caddy/caddy.json:/etc/caddy/caddy.json:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    networks:
+      - control
+      - deploynet
+    depends_on:
+      api:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+
+  buildkit:
+    image: moby/buildkit:buildx-stable-1
+    command: ["--addr", "tcp://0.0.0.0:1234"]
+    privileged: true
+    networks:
+      - control
+
+networks:
+  control:
+  deploynet:
+    name: brimble_deploynet
+
+volumes:
+  app-db:
+  build-work:
+  caddy-data:
+  caddy-config:

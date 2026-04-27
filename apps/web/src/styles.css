@@ -1,0 +1,415 @@
+:root {
+  color: #161a18;
+  background: #f5f6f4;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #f5f6f4;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  border: 1px solid #c8d0ca;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #17211b;
+  cursor: pointer;
+  min-height: 38px;
+  padding: 0 12px;
+}
+
+button:hover:not(:disabled) {
+  border-color: #68746c;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+a {
+  color: #0b62a3;
+  overflow-wrap: anywhere;
+}
+
+.app-shell {
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  letter-spacing: 0;
+}
+
+.topbar p,
+.muted {
+  margin: 4px 0 0;
+  color: #637069;
+}
+
+.topbar-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #526058;
+  font-size: 0.95rem;
+}
+
+.stream-dot {
+  border: 1px solid #c8d0ca;
+  border-radius: 999px;
+  padding: 5px 10px;
+  background: #ffffff;
+}
+
+.stream-dot.connected {
+  border-color: #4e8c64;
+  color: #1f6b3b;
+}
+
+.stream-dot.disconnected {
+  border-color: #bf7a5f;
+  color: #9a351f;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) minmax(300px, 420px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.pane {
+  min-width: 0;
+  border: 1px solid #d8ded9;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.create-pane,
+.list-pane {
+  padding: 16px;
+}
+
+.detail-pane {
+  padding: 18px;
+}
+
+.pane-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.pane h2,
+.detail-header h2,
+.logs-header h3 {
+  margin: 0;
+  letter-spacing: 0;
+}
+
+.pane h2,
+.detail-header h2 {
+  font-size: 1.05rem;
+}
+
+.logs-header h3 {
+  font-size: 0.95rem;
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 14px;
+  padding: 4px;
+  border-radius: 8px;
+  background: #eef1ee;
+}
+
+.segmented button {
+  border-color: transparent;
+  background: transparent;
+  min-width: 0;
+}
+
+.segmented button.active {
+  background: #ffffff;
+  border-color: #c8d0ca;
+}
+
+.field {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 12px;
+  color: #39433e;
+  font-size: 0.92rem;
+}
+
+.field input {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid #c8d0ca;
+  border-radius: 6px;
+  padding: 0 10px;
+}
+
+.primary {
+  width: 100%;
+  background: #1f6b3b;
+  border-color: #1f6b3b;
+  color: #ffffff;
+}
+
+.deployment-list {
+  display: grid;
+  gap: 8px;
+}
+
+.deployment-row {
+  width: 100%;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  text-align: left;
+  padding: 10px;
+}
+
+.deployment-row.active {
+  border-color: #1f6b3b;
+  background: #f0f7f2;
+}
+
+.row-main {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+}
+
+.row-main strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row-main small {
+  color: #637069;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 76px;
+  min-height: 26px;
+  border-radius: 999px;
+  padding: 0 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status.pending,
+.status.building,
+.status.deploying {
+  color: #725b00;
+  background: #fff4c2;
+}
+
+.status.running {
+  color: #135b31;
+  background: #dff3e5;
+}
+
+.status.failed {
+  color: #8e251f;
+  background: #fde2dc;
+}
+
+.status.stopped {
+  color: #47504b;
+  background: #edf0ed;
+}
+
+.detail-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.metadata {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 16px;
+}
+
+.metadata div {
+  min-width: 0;
+  border: 1px solid #e1e6e2;
+  border-radius: 6px;
+  padding: 10px;
+  background: #fafbf9;
+}
+
+.metadata dt {
+  color: #637069;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.metadata dd {
+  margin: 0;
+  min-height: 22px;
+  overflow-wrap: anywhere;
+}
+
+.error-text {
+  margin: 10px 0 0;
+  color: #9a351f;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.logs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 16px 0 8px;
+  color: #3c4741;
+}
+
+.logs-header span {
+  color: #637069;
+  font-size: 0.9rem;
+}
+
+.logs {
+  height: min(58vh, 620px);
+  overflow: auto;
+  border-radius: 8px;
+  background: #101513;
+  color: #ecf4ef;
+  padding: 12px;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.log-line {
+  display: grid;
+  grid-template-columns: 42px 84px minmax(0, 1fr);
+  gap: 10px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.log-line.stderr {
+  color: #ffb7a5;
+}
+
+.log-seq,
+.log-phase {
+  color: #96a49c;
+}
+
+.empty-detail {
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+  color: #637069;
+}
+
+@media (max-width: 1120px) {
+  .layout {
+    grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
+  }
+
+  .detail-pane {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    padding: 16px;
+  }
+
+  .topbar,
+  .detail-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .topbar-meta,
+  .actions {
+    justify-content: flex-start;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-pane {
+    grid-column: auto;
+  }
+
+  .metadata {
+    grid-template-columns: 1fr;
+  }
+
+  .log-line {
+    grid-template-columns: 38px minmax(58px, auto) minmax(0, 1fr);
+    gap: 8px;
+  }
+}

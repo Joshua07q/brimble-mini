@@ -1,0 +1,52 @@
+{
+  "admin": {
+    "listen": "0.0.0.0:2019",
+    "origins": [
+      "http://caddy:2019",
+      "http://localhost:2019",
+      "http://127.0.0.1:2019"
+    ]
+  },
+  "apps": {
+    "http": {
+      "servers": {
+        "brimble": {
+          "listen": [":80"],
+          "routes": [
+            {
+              "match": [
+                {
+                  "path": ["/api/*"]
+                }
+              ],
+              "handle": [
+                {
+                  "handler": "reverse_proxy",
+                  "upstreams": [
+                    {
+                      "dial": "api:3000"
+                    }
+                  ]
+                }
+              ],
+              "terminal": true
+            },
+            {
+              "handle": [
+                {
+                  "handler": "reverse_proxy",
+                  "upstreams": [
+                    {
+                      "dial": "web:4173"
+                    }
+                  ]
+                }
+              ],
+              "terminal": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}
