@@ -2,6 +2,7 @@
   "name": "brimble-mini-sample-app",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "npm@10.9.7",
   "type": "module",
   "scripts": {
     "build": "echo \"no build step required\"",
